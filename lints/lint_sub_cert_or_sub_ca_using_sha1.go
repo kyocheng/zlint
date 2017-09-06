@@ -21,7 +21,7 @@ func (l *sigAlgTestsSHA1) CheckApplies(c *x509.Certificate) bool {
 }
 
 func (l *sigAlgTestsSHA1) Execute(c *x509.Certificate) *LintResult {
-	if  c.SignatureAlgorithm == x509.SHA1WithRSA || c.SignatureAlgorithm == x509.DSAWithSHA1 || c.SignatureAlgorithm == x509.ECDSAWithSHA1 {
+	if c.SignatureAlgorithm == x509.SHA1WithRSA || c.SignatureAlgorithm == x509.DSAWithSHA1 || c.SignatureAlgorithm == x509.ECDSAWithSHA1 {
 		return &LintResult{Status: Error}
 	}
 	return &LintResult{Status: Pass}
