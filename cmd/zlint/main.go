@@ -71,9 +71,15 @@ func MakeIssuerString(cert *x509.Certificate, result *zlint.ResultSet, validatio
 	notBefore := cert.NotBefore.String()
 	notAfter := cert.NotAfter.String()
 	sha256fp := cert.FingerprintSHA256.Hex()
+	ErrorsString := strings.Join(result.Errors, ",")
+	WarningString := strings.Join(result.Warnings, ",")
+	FatalsString := strings.Join(result.Fatals, ",'")
+	ErrorsString = strings.Replace(ErrorsString, ",", ":", -1)
+	WarningString = strings.Replace(WarningString, ",", ":", -1)
+	FatalsString = strings.Replace(FatalsString, ",", ":", -1)
 
 	var outputString string
-	outputString += strconv.Itoa(numErrors) + "," + strconv.Itoa(numWarnings) + "," + strconv.FormatBool(validation.nssValid) + "," + strconv.FormatBool(validation.nssWasValid) + "," + notBefore + "," + notAfter + "," + issuerDn + "," + subjectDn + "," + sha256fp + "," + strconv.Itoa(numFatals) + "," + strings.Join(result.Fatals, ",") + "," + strings.Join(result.Errors, ",") + "," + strings.Join(result.Warnings, ",") + "\n"
+	outputString += strconv.Itoa(numErrors) + "," + strconv.Itoa(numWarnings) + "," + strconv.FormatBool(validation.nssValid) + "," + strconv.FormatBool(validation.nssWasValid) + "," + notBefore + "," + notAfter + "," + issuerDn + "," + subjectDn + "," + sha256fp + "," + strconv.Itoa(numFatals) + "," + ErrorsString + "," + WarningString + "," + FatalsString + "\n"
 	return outputString
 }
 
