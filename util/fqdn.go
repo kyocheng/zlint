@@ -1,11 +1,12 @@
 package util
 
 import (
+	"net"
+	"strings"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/weppos/publicsuffix-go/publicsuffix"
 	"github.com/zmap/zcrypto/x509"
-	"net"
-	"strings"
 )
 
 func RemovePrependedQuestionMarks(domain string) string {
