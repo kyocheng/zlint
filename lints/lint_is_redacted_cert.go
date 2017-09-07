@@ -38,9 +38,9 @@ func (l *DNSNameRedacted) Execute(c *x509.Certificate) *LintResult {
 func init() {
 	RegisterLint(&Lint{
 		Name:          "n_contains_redacted_dnsname",
-		Description:   "Some Precerts are prepended with question marks.",
-		Source:        CABFBaselineRequirements,
-		Citation:      "MDSP",
+		Description:   "Some precerts are redacted and of the form ?.?.a.com or *.?.a.com",
+		Source:        ZLint,
+		Citation:      "IETF Draft: https://tools.ietf.org/id/draft-strad-trans-redaction-00.html",
 		EffectiveDate: util.ZeroDate,
 		Lint:          &DNSNameRedacted{},
 	})

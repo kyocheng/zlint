@@ -91,14 +91,16 @@ func (l *Lint) CheckEffective(c *x509.Certificate) bool {
 	return false
 }
 
-// Execute runs the lint against a certificate. See LintInterface for details
-// about the methods called. The ordering is as follows:
+// Execute runs the lint against a certificate. For lints that are
+// sourced from the CA/B Forum Baseline Requirements, we first determine
+// if they are within the purview of the BRs. See LintInterface for details
+// about the other methods called. The ordering is as follows:
 //
 // CheckApplies()
 // CheckEffective()
 // Execute()
 func (l *Lint) Execute(cert *x509.Certificate) *LintResult {
-	if l.Source == CABFBaselineRequirements && !util.IsTestableBRCertificate(cert) {
+	if l.Source == CABFBaselineRequirements && !util.IsServerAuthCert(cert) {
 		return &LintResult{Status: NA}
 	}
 	if !l.Lint.CheckApplies(cert) {
