@@ -11,6 +11,7 @@ package lints
 import (
 	"github.com/zmap/zcrypto/x509"
 	"github.com/zmap/zlint/util"
+	"strings"
 )
 
 type subjectCommonNameNotFromSAN struct{}
@@ -25,15 +26,16 @@ func (l *subjectCommonNameNotFromSAN) CheckApplies(c *x509.Certificate) bool {
 
 func (l *subjectCommonNameNotFromSAN) Execute(c *x509.Certificate) *LintResult {
 	cn := c.Subject.CommonName
-
+	cnLower := strings.ToLower(cn)
 	for _, dn := range c.DNSNames {
-		if cn == dn {
+		dnLower := strings.ToLower(dn)
+		if cnLower == dnLower {
 			return &LintResult{Status: Pass}
 		}
 	}
 
 	for _, ip := range c.IPAddresses {
-		if cn == ip.String() {
+		if cnLower == ip.String() {
 			return &LintResult{Status: Pass}
 		}
 	}
