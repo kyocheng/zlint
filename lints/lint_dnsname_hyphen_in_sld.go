@@ -32,7 +32,7 @@ func (l *DNSNameHyphenInSLD) Execute(c *x509.Certificate) *LintResult {
 	if c.Subject.CommonName != "" {
 		hyphenFound, err := hyphenAtStartOrEndOfSLD(c.Subject.CommonName)
 		if err != nil {
-			return &LintResult{Status: Fatal}
+			return &LintResult{Status: NA}
 		}
 		if hyphenFound {
 			return &LintResult{Status: Error}
@@ -41,7 +41,7 @@ func (l *DNSNameHyphenInSLD) Execute(c *x509.Certificate) *LintResult {
 	for _, dns := range c.DNSNames {
 		hyphenFound, err := hyphenAtStartOrEndOfSLD(dns)
 		if err != nil {
-			return &LintResult{Status: Fatal}
+			return &LintResult{Status: NA}
 		}
 		if hyphenFound {
 			return &LintResult{Status: Error}
